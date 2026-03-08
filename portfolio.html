@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ankit Kumar — Portfolio website</title>
+
+  <style>
+    :root{
+      --bg:#070a12;
+      --panel:#0d1117;
+      --panel2:#111827;
+      --text:#e6edf3;
+      --muted:#9aa4b2;
+      --gold:#f0db4f;
+      --blue:#58a6ff;
+      --green:#3fb950;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1000px 520px at 50% -10%, rgba(240,219,79,.18), transparent 60%),
+        radial-gradient(900px 460px at 85% 15%, rgba(88,166,255,.12), transparent 60%),
+        radial-gradient(800px 420px at 20% 35%, rgba(63,185,80,.08), transparent 65%),
+        linear-gradient(180deg, #05070d, var(--bg));
+      color:var(--text);
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%}
+
+    .wrap{
+      width:min(1180px, 92vw);
+      margin:0 auto;
+      padding:90px 0 64px;
+    }
+
+    /* ---------- Header (capsule-like) ---------- */
+    .hero{
+      position:relative;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(13,17,23,.82), rgba(13,17,23,.55));
+      box-shadow: var(--shadow);
+      border-radius: 22px;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(650px 260px at 50% 0%, rgba(240,219,79,.16), transparent 70%),
+        radial-gradient(540px 260px at 80% 25%, rgba(88,166,255,.12), transparent 70%),
+        radial-gradient(520px 260px at 20% 40%, rgba(63,185,80,.09), transparent 70%);
+      pointer-events:none;
+    }
+    .heroWave{
+      position:absolute; left:0; right:0; top:0;
+      height:120px;
+      opacity:.55;
+      background:
+        radial-gradient(120% 100% at 50% 0%, rgba(240,219,79,.14), transparent 60%),
+        linear-gradient(90deg, rgba(88,166,255,.10), rgba(240,219,79,.10), rgba(63,185,80,.10));
+      filter: blur(10px);
+      pointer-events:none;
+    }
+    .heroInner{
+      position:relative;
+      z-index:1;
+      padding:26px 22px 22px;
+      text-align:center;
+    }
+    .profileWrap{
+      width:150px;
+      height:150px;
+      margin:0 auto 12px;
+      border-radius:50%;
+      border:2px solid rgba(240,219,79,.45);
+      box-shadow: 0 12px 24px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .profileImg{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    @media (max-width: 560px){
+      .profileWrap{
+        width:120px;
+        height:120px;
+      }
+    }
+    .name{
+      margin:0;
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight:900;
+      letter-spacing:.2px;
+      line-height:1.05;
+    }
+    .subtitle{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    /* ---------- Typing animation (real CSS/JS typing) ---------- */
+    .typingBox{
+      margin:18px auto 0;
+      width:min(980px, 96%);
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.22);
+      border-radius: 14px;
+      padding:14px 14px;
+      overflow:hidden;
+      position:relative;
+    }
+    .typingBox::after{
+      content:"";
+      position:absolute; inset:-60px;
+      background: radial-gradient(circle at 50% 50%, rgba(240,219,79,.10), transparent 62%);
+      filter: blur(10px);
+      pointer-events:none;
+    }
+    .typingLine{
+      position:relative;
+      z-index:1;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 15px;
+      color:#c9d1d9;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .cursor{
+      display:inline-block;
+      width:10px;
+      margin-left:3px;
+      color:var(--gold);
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink{ 50%{opacity:0} }
+
+    /* ---------- Badges ---------- */
+    .badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:center;
+      padding:18px 10px 4px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(17,24,39,.42);
+      box-shadow: 0 12px 20px rgba(0,0,0,.30);
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    .badge:hover{ transform: translateY(-1px); border-color: rgba(240,219,79,.35); }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(240,219,79,.35);
+    }
+    .badge strong{font-size:13px}
+    .badge small{color:var(--muted); font-weight:700; font-size:12px}
+
+    /* ---------- Layout ---------- */
+    .grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:16px;
+      align-items:start;
+    }
+    @media (max-width: 980px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(13,17,23,.82), rgba(13,17,23,.55));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardHead{
+      padding:16px 16px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .cardTitle{
+      margin:0;
+      font-size:15px;
+      font-weight:900;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .chip{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      background: rgba(0,0,0,.18);
+      font-weight:800;
+      white-space:nowrap;
+    }
+    .cardBody{ padding:14px 16px 16px; }
+    .muted{ color:var(--muted); }
+
+    /* Sticky dashboard sidebar */
+    .sticky{
+      position: sticky;
+      top: 74px;
+    }
+    @media (max-width: 980px){
+      .sticky{ position: static; }
+    }
+
+    /* Embeds */
+    .embed{
+      border:1px solid var(--border);
+      border-radius: 14px;
+      overflow:hidden;
+      background: rgba(0,0,0,.16);
+      box-shadow: 0 12px 20px rgba(0,0,0,.30);
+    }
+    .embed img{ display:block; width:100%; height:auto; }
+    .embeds{ display:grid; gap:12px; }
+
+    /* ---------- Resume button (sidebar) ---------- */
+    .resumeBtn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width:100%;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(240,219,79,.35);
+      background: linear-gradient(180deg, rgba(240,219,79,.16), rgba(13,17,23,.55));
+      color: var(--text);
+      font-weight: 900;
+      font-size: 13px;
+      box-shadow: 0 14px 28px rgba(0,0,0,.38);
+      transition: transform .12s ease, border-color .12s ease, filter .12s ease;
+    }
+    .resumeBtn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(240,219,79,.55);
+      filter: brightness(1.06);
+    }
+    .resumeIcon{
+      width:18px;height:18px;
+      display:inline-block;
+      border-radius:6px;
+      background: radial-gradient(circle at 30% 30%, rgba(240,219,79,.95), rgba(240,219,79,.22));
+      box-shadow: 0 0 18px rgba(240,219,79,.35);
+    }
+
+    /* Tech icons */
+    .iconGrid{
+      display:grid;
+      gap:12px;
+      margin-top:8px;
+    }
+    .iconRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:center;
+      padding:10px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(0,0,0,.14);
+    }
+    .iconRow img{ height:44px; }
+
+    /* Projects with buttons */
+    .projects{
+      margin-top:10px;
+      display:grid;
+      gap:12px;
+    }
+    .proj{
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(0,0,0,.14);
+      padding:12px;
+    }
+    .projTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .proj h3{
+      margin:0;
+      font-size:14.5px;
+      font-weight:900;
+    }
+    .proj p{ margin:8px 0 0; color:#d4dbe3; }
+    .proj .meta{ margin-top:8px; color:var(--muted); font-size:12.5px; font-weight:700; }
+    .btns{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 11px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(17,24,39,.35);
+      font-weight:850;
+      font-size:12.5px;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(88,166,255,.35); }
+    .btn.primary{ border-color: rgba(240,219,79,.35); }
+    .btn .ico{
+      width:9px;height:9px;border-radius:50%;
+      background: var(--blue);
+      box-shadow: 0 0 16px rgba(88,166,255,.35);
+    }
+    .btn.primary .ico{ background: var(--gold); box-shadow: 0 0 16px rgba(240,219,79,.35); }
+
+    /* ---------- Fixed Navigation Bar ---------- */
+    .navbar{
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(16px, 4vw, 48px);
+      background: rgba(7,10,18,.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 4px 24px rgba(0,0,0,.45);
+    }
+    .navLogo{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: .3px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .navLogoImg{
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(240,219,79,.50);
+      box-shadow: 0 0 12px rgba(240,219,79,.25);
+    }
+    .navLinks{
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 3vw, 32px);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .navLinks a{
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--muted);
+      transition: color .15s ease;
+      position: relative;
+    }
+    .navLinks a::after{
+      content: "";
+      position: absolute;
+      left: 0; bottom: -3px;
+      width: 0; height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: width .2s ease;
+    }
+    .navLinks a:hover{ color: var(--text); }
+    .navLinks a:hover::after{ width: 100%; }
+    @media (max-width: 480px){
+      .navLinks{ gap: 10px; }
+      .navLinks a{ font-size: 12px; }
+    }
+
+    /* Footer */
+    footer{
+      margin-top:18px;
+      text-align:center;
+      color:var(--muted);
+      font-weight:800;
+    }
+    .line{
+      width:min(900px, 92vw);
+      height:1px;
+      margin:18px auto 12px;
+      background: linear-gradient(90deg, transparent, rgba(240,219,79,.35), transparent);
+    }
+
+    /* Small helper */
+    .kvs{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    @media (max-width: 560px){
+      .kvs{grid-template-columns:1fr}
+    }
+    .kv{
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(0,0,0,.14);
+      padding:12px;
+    }
+    .kv b{ color: var(--gold); }
+
+    /* ---------- LeetCode Awards ---------- */
+    .awardsGrid{
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+    @media (max-width: 700px){ .awardsGrid{ grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 480px){ .awardsGrid{ grid-template-columns: repeat(2, 1fr); } }
+
+    .awardBadge{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 6px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.14);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+      cursor: default;
+    }
+    .awardBadge:hover{
+      transform: translateY(-4px) scale(1.04);
+      border-color: rgba(240,219,79,.35);
+      box-shadow: 0 8px 24px rgba(240,219,79,.12);
+    }
+    .hexWrap{
+      width: 52px;
+      height: 52px;
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+      background: var(--hc, #9aa4b2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: .92;
+    }
+    .hexInner{
+      width: 40px;
+      height: 40px;
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+      background: rgba(0,0,0,.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hexLabel{
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.1;
+    }
+    .awardName{
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text);
+      text-align: center;
+      line-height: 1.3;
+    }
+    .awardStars{
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+    .awardDate{
+      font-size: 10.5px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    /* ---------- Scroll-reveal animations ---------- */
+    .reveal{
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .reveal.visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- Animated count-up ---------- */
+    .countUp{ font-variant-numeric: tabular-nums; }
+
+    /* ---------- Navbar active link ---------- */
+    .navLinks a.active{
+      color: var(--gold);
+    }
+    .navLinks a.active::after{ width: 100%; }
+  </style>
+</head>
+
+<body>
+  <!-- FIXED NAVIGATION BAR -->
+  <nav class="navbar">
+    <a class="navLogo" href="#home">
+      <img class="navLogoImg" src="Portrait of Ankit Kumar.jpeg" alt="Ankit Kumar" />
+      Ankit Kumar
+    </a>
+    <ul class="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#hackathons">Hackathons</a></li>
+      <li><a href="#resume">Resume</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="wrap">
+
+    <!-- HERO -->
+    <section class="hero reveal" id="home">
+      <div class="heroWave"></div>
+
+      <div class="heroInner">
+        <div class="profileWrap">
+          <img class="profileImg" src="Portrait of Ankit Kumar.jpeg" alt="Portrait of Ankit Kumar" />
+        </div>
+        <h1 class="name">Ankit Kumar</h1>
+        <p class="subtitle">Full-Stack Developer | Data Analyst</p>
+
+        <!-- Real typing -->
+        <div class="typingBox" aria-label="Typing headline">
+          <div class="typingLine">
+            <span id="typing"></span><span class="cursor">|</span>
+          </div>
+        </div>
+
+        <div class="badges">
+          <a class="badge" href="mailto:ankit26548k@gmail.com" target="_blank" rel="noreferrer" id="contact">
+            <span class="dot"></span>
+            <div><strong>Email</strong><br><small>ankit26548k@gmail.com</small></div>
+          </a>
+
+          <a class="badge" href="https://www.linkedin.com/in/ankit-kumar-developer122" target="_blank" rel="noreferrer">
+            <span class="dot"></span>
+            <div><strong>LinkedIn</strong><br><small>@ankit-kumar-developer122</small></div>
+          </a>
+
+          <a class="badge" href="https://github.com/ankit-kumar-developer-122" target="_blank" rel="noreferrer">
+            <span class="dot"></span>
+            <div><strong>GitHub</strong><br><small>@ankit-kumar-developer-122</small></div>
+          </a>
+
+          <a class="badge" href="https://leetcode.com/u/ankit021/" target="_blank" rel="noreferrer">
+            <span class="dot"></span>
+            <div><strong>LeetCode</strong><br><small>@ankit021</small></div>
+          </a>
+
+          <a class="badge" href="https://codolio.com/profile/akm265" target="_blank" rel="noreferrer">
+            <span class="dot"></span>
+            <div><strong>Codolio</strong><br><small>@akm265</small></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN GRID -->
+    <section class="grid reveal">
+
+      <!-- LEFT -->
+      <div class="card">
+        <div class="cardHead">
+          <h2 class="cardTitle">📌 About Me</h2>
+        </div>
+        <div class="cardBody">
+          <p class="muted" style="margin:0">
+            Passionate Software Developer and Problem Solver with strong skills in
+            <b style="color:var(--gold)">Data Structures & Algorithms</b>,
+            <b style="color:var(--gold)">Full Stack Development</b>, and
+            <b style="color:var(--gold)">AI-based applications</b>.
+          </p>
+
+          <div class="kvs">
+            <div class="kv"><b>LeetCode</b><br><span class="muted">240+ problems solved (as stated)</span></div>
+            <div class="kv"><b>Focus</b><br><span class="muted">Full-stack + analytics dashboards</span></div>
+            <div class="kv"><b>Education</b><br><span class="muted">B.Tech CSE — RCET Bhilai (2027)</span></div>
+            <div class="kv"><b>Interests</b><br><span class="muted">AI • Data Analytics • Web Dev</span></div>
+          </div>
+
+          <div style="margin-top:14px">
+            <h2 class="cardTitle" id="projects">🚀 Projects</h2>
+
+            <div class="projects">
+              <div class="proj">
+                <div class="projTop">
+                  <div>
+                    <h3>🏥 AI-Powered Rural Healthcare System</h3>
+                    <p>Full-stack AI healthcare platform bridging the gap for rural patients — features an intelligent chatbot for symptom triage, real-time audio/video consultations, and appointment scheduling. Built with TypeScript & React.</p>
+                    <div class="meta">TypeScript • React • Node.js • AI Chatbot • WebRTC • REST API</div>
+                  </div>
+                  <div class="btns">
+                    <a class="btn primary" href="https://github.com/ankit-kumar-developer-122/AI-Powered-Rural-Healthcare-System" target="_blank" rel="noreferrer">
+                      <span class="ico"></span> GitHub Repo
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="proj">
+                <div class="projTop">
+                  <div>
+                    <h3>🗳️ E-Voting System</h3>
+                    <p>Secure biometric-based digital voting system using real-time face recognition to authenticate voters, preventing duplicate votes and identity fraud. Achieved ~92% authentication accuracy.</p>
+                    <div class="meta">Python • OpenCV • Face Recognition • SQLite • Tkinter • 92% accuracy</div>
+                  </div>
+                  <div class="btns">
+                    <a class="btn primary" href="https://github.com/ankit-kumar-developer-122/E-Voting-System" target="_blank" rel="noreferrer">
+                      <span class="ico"></span> GitHub Repo
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="proj">
+                <div class="projTop">
+                  <div>
+                    <h3>✈️ AI Travel Planning App</h3>
+                    <p>Cross-platform mobile app built with Flutter that generates personalized travel itineraries using AI, with smart route optimization and destination recommendations. ⭐ 1 star on GitHub.</p>
+                    <div class="meta">Flutter • Dart • Google Maps API • AI Integration • Apache 2.0</div>
+                  </div>
+                  <div class="btns">
+                    <a class="btn primary" href="https://github.com/ankit-kumar-developer-122/Ai-Travel-Planning-App" target="_blank" rel="noreferrer">
+                      <span class="ico"></span> GitHub Repo
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="proj">
+                <div class="projTop">
+                  <div>
+                    <h3>📊 Customer Behaviour Analysis</h3>
+                    <p>End-to-end data analysis project exploring customer purchasing patterns, segmentation, and churn indicators using Python. Includes rich visualizations and actionable business insights.</p>
+                    <div class="meta">Python • Pandas • NumPy • Matplotlib • Seaborn • Jupyter Notebook</div>
+                  </div>
+                  <div class="btns">
+                    <a class="btn primary" href="https://github.com/ankit-kumar-developer-122/Customer-Behaviour-Analysis-Data-Analysis-Project" target="_blank" rel="noreferrer">
+                      <span class="ico"></span> GitHub Repo
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="proj">
+                <div class="projTop">
+                  <div>
+                    <h3>📈 Startup Profit Prediction</h3>
+                    <p>Machine learning model that predicts startup profitability based on R&D spend, administration costs, and marketing budget using multiple linear regression with dummy variable encoding.</p>
+                    <div class="meta">Python • Scikit-learn • Linear Regression • Pandas • Kaggle Dataset</div>
+                  </div>
+                  <div class="btns">
+                    <a class="btn primary" href="https://github.com/ankit-kumar-developer-122/startup-profit-prediction-project" target="_blank" rel="noreferrer">
+                      <span class="ico"></span> GitHub Repo
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="proj">
+                <div class="projTop">
+                  <div>
+                    <h3>🚗 Used Vehicle Price Prediction</h3>
+                    <p>Predictive ML model for estimating second-hand vehicle prices based on features like mileage, brand, fuel type, and age — helping buyers and sellers make data-driven decisions.</p>
+                    <div class="meta">Python • Scikit-learn • Regression • Pandas • Data Preprocessing</div>
+                  </div>
+                  <div class="btns">
+                    <a class="btn primary" href="https://github.com/ankit-kumar-developer-122/Used-Vehicle-Price-Prediction" target="_blank" rel="noreferrer">
+                      <span class="ico"></span> GitHub Repo
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px">
+            <h2 class="cardTitle" id="hackathons">🏆 Hackathons</h2>
+            <div class="proj">
+              <h3>🥈 Flash Hack 2025 — 1st Runner Up</h3>
+              <p class="muted" style="margin-top:6px">3-hour Hackathon by GDG-RCET Bhilai</p>
+            </div>
+            <div class="proj">
+              <h3>⏱ Hack-A-Sol — IIIT Naya Raipur</h3>
+              <p class="muted" style="margin-top:6px">24-hour National Hackathon</p>
+            </div>
+          </div>
+
+          <!-- DASHBOARD EMBEDS (moved from sidebar) -->
+          <div style="margin-top:14px">
+            <h2 class="cardTitle">🧩 Dashboard</h2>
+            <div class="embeds" style="margin-top:10px">
+              <div class="embed">
+                <a href="https://codolio.com/profile/akm265" target="_blank" rel="noreferrer">
+                  <img src="https://codolio.com/api/dashboard?username=akm265&theme=radical&v=2026" alt="Codolio dashboard" />
+                </a>
+              </div>
+              <div class="embed">
+                <a href="https://leetcode.com/u/ankit021/" target="_blank" rel="noreferrer">
+                  <img src="https://leetcard.jacoblin.cool/ankit021?theme=dark&font=Fira%20Code&ext=contest" alt="LeetCode stats card" />
+                </a>
+              </div>
+              <div class="embed">
+                <img src="https://github-readme-activity-graph.vercel.app/graph?username=ankit-kumar-developer-122&theme=github-compact&bg_color=0d1117&color=58a6ff&line=f0db4f&point=ffffff&area=true&hide_border=true"
+                     alt="Contribution graph" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT (STICKY AWARDS) -->
+      <aside class="card sticky">
+        <div class="cardHead">
+          <h2 class="cardTitle">🎖️ Awards <span style="color:var(--muted);font-size:12px;font-weight:700;margin-left:6px">(8)</span></h2>
+        </div>
+        <div class="cardBody">
+          <div class="awardsGrid" style="grid-template-columns: repeat(2,1fr)">
+              <div class="awardBadge">
+                <div class="hexWrap" style="--hc:#f4a58a">
+                  <div class="hexInner"><span class="hexLabel">C</span></div>
+                </div>
+                <div class="awardName">C</div>
+                <div class="awardStars">★<span style="color:var(--border)">★★★★</span></div>
+              </div>
+              <div class="awardBadge">
+                <div class="hexWrap" style="--hc:#f0db4f">
+                  <div class="hexInner"><span class="hexLabel" style="font-size:10px">🗄️</span></div>
+                </div>
+                <div class="awardName">SQL</div>
+                <div class="awardStars" style="color:var(--gold)">★★★★★</div>
+              </div>
+              <div class="awardBadge">
+                <div class="hexWrap" style="--hc:#9aa4b2">
+                  <div class="hexInner"><span class="hexLabel" style="font-size:11px;font-weight:900">30</span></div>
+                </div>
+                <div class="awardName">30 Days of Code</div>
+                <div class="awardStars">★★★★★</div>
+              </div>
+              <div class="awardBadge">
+                <div class="hexWrap" style="--hc:#9aa4b2">
+                  <div class="hexInner"><span class="hexLabel" style="font-size:12px">🐍</span></div>
+                </div>
+                <div class="awardName">Python</div>
+                <div class="awardStars">★★★★<span style="color:var(--border)">★</span></div>
+              </div>
+              <div class="awardBadge">
+                <div class="hexWrap" style="--hc:#9aa4b2">
+                  <div class="hexInner"><span class="hexLabel" style="font-size:11px">☕</span></div>
+                </div>
+                <div class="awardName">Java</div>
+                <div class="awardStars">★★★<span style="color:var(--border)">★★</span></div>
+              </div>
+              <div class="awardBadge">
+                <div class="hexWrap" style="--hc:#9aa4b2">
+                  <div class="hexInner"><span class="hexLabel" style="font-size:10px;font-weight:900">C++</span></div>
+                </div>
+                <div class="awardName">C++</div>
+                <div class="awardStars">★★★<span style="color:var(--border)">★★</span></div>
+              </div>
+              <div class="awardBadge">
+                <div class="hexWrap" style="--hc:#58a6ff">
+                  <div class="hexInner"><span class="hexLabel" style="font-size:9px;font-weight:900">2<br><span style="font-size:7px">FEB</span></span></div>
+                </div>
+                <div class="awardName">Feb LeetCoding Challenge</div>
+                <div class="awardDate">28 Feb 2026</div>
+              </div>
+              <div class="awardBadge">
+                <div class="hexWrap" style="--hc:#3fb950">
+                  <div class="hexInner"><span class="hexLabel" style="font-size:9px;font-weight:900">50<br><span style="font-size:7px">DAYS</span></span></div>
+                </div>
+                <div class="awardName">50 Days Badge 2026</div>
+                <div class="awardDate">19 Feb 2026</div>
+              </div>
+          </div>
+
+          <!-- Resume button under awards -->
+          <div style="margin-top:14px;" id="resume">
+            <a class="resumeBtn"
+               href="https://drive.google.com/file/d/1ZsfVm3KWbGJ_A1cY4TNFXlcYVosR_5Nq/view?usp=drive_link"
+               target="_blank" rel="noreferrer">
+              <span class="resumeIcon"></span>
+              Download Resume
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </section>
+
+    <!-- TECH STACK -->
+    <section class="card reveal" style="margin-top:16px">
+      <div class="cardHead">
+        <h2 class="cardTitle">🛠 Tech Stack</h2>
+       
+      </div>
+      <div class="cardBody">
+
+        <div class="iconGrid">
+          <div>
+            <div class="muted" style="font-weight:900;margin:0 0 8px">Languages</div>
+            <div class="iconRow">
+              <img src="https://skillicons.dev/icons?i=python,java,cpp,c,kotlin&theme=dark" alt="Languages icons" />
+            </div>
+          </div>
+
+          <div>
+            <div class="muted" style="font-weight:900;margin:0 0 8px">Web Development</div>
+            <div class="iconRow">
+              <img src="https://skillicons.dev/icons?i=react,nodejs,html,css,js&theme=dark" alt="Web icons" />
+            </div>
+          </div>
+
+          <div>
+            <div class="muted" style="font-weight:900;margin:0 0 8px">Data Analytics</div>
+            <div class="iconRow">
+              <img src="https://cdn.simpleicons.org/pandas/white" alt="Pandas" />
+              <img src="https://cdn.simpleicons.org/numpy/white" alt="NumPy" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Matplotlib_icon.svg" alt="Matplotlib" />
+              <img src="https://user-images.githubusercontent.com/315810/92161415-9e357100-edfe-11ea-917d-f9e33fd60741.png" alt="Seaborn" />
+              <img src="https://raw.githubusercontent.com/microsoft/PowerBI-Icons/main/SVG/Power-BI.svg" alt="Power BI" />
+            </div>
+          </div>
+
+          <div>
+            <div class="muted" style="font-weight:900;margin:0 0 8px">Databases</div>
+            <div class="iconRow">
+              <img src="https://skillicons.dev/icons?i=mysql,mongodb&theme=dark" alt="MySQL & MongoDB" />
+              <!-- Oracle icon: light badge so it stays visible on dark UI -->
+              <img src="https://img.shields.io/badge/Oracle_SQL-F80000?style=for-the-badge&logo=oracle&logoColor=white" alt="Oracle SQL" />
+            </div>
+          </div>
+
+          <div>
+            <div class="muted" style="font-weight:900;margin:0 0 8px">Tools</div>
+            <div class="iconRow">
+              <img src="https://skillicons.dev/icons?i=git,androidstudio,firebase,figma,github&theme=dark" alt="Tools icons" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="line"></div>
+      ⭐ Transforming ideas into reality through code and innovation.<br/>
+      <span>Last Updated: 2026</span>
+    </footer>
+
+  </div>
+
+  <script>
+    // ── Typing animation ──────────────────────────────────────────────────────
+    const lines = [
+      "B.Tech(IT) Student @ RCET Bhilai (2027)",
+      "Full-Stack Development & Data Analytics",
+      "Python | React.js | Node.js | Power BI",
+      "Solved 250+ LeetCode Problems",
+      "Machine Learning & Data Science Enthusiast"
+    ];
+    const el = document.getElementById("typing");
+    let lineIdx = 0, charIdx = 0, deleting = false;
+    const typeSpeed = 32, deleteSpeed = 18, holdTime = 950;
+    function tick(){
+      const current = lines[lineIdx];
+      if(!deleting){
+        charIdx++;
+        el.textContent = current.slice(0, charIdx);
+        if(charIdx >= current.length){ deleting = true; setTimeout(tick, holdTime); return; }
+        setTimeout(tick, typeSpeed);
+      } else {
+        charIdx--;
+        el.textContent = current.slice(0, Math.max(0, charIdx));
+        if(charIdx <= 0){ deleting = false; lineIdx = (lineIdx + 1) % lines.length; setTimeout(tick, 240); return; }
+        setTimeout(tick, deleteSpeed);
+      }
+    }
+    tick();
+
+    // ── Scroll-reveal ─────────────────────────────────────────────────────────
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // ── Active nav link on scroll ─────────────────────────────────────────────
+    const sections = ['home','projects','hackathons','resume','contact'];
+    const navLinks = document.querySelectorAll('.navLinks a');
+    const scrollSpy = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          navLinks.forEach(a => a.classList.remove('active'));
+          const match = document.querySelector(`.navLinks a[href="#${e.target.id}"]`);
+          if(match) match.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+    sections.forEach(id => { const el = document.getElementById(id); if(el) scrollSpy.observe(el); });
+
+    // ── Smooth scroll for nav links ───────────────────────────────────────────
+    document.querySelectorAll('.navLinks a, .navLogo').forEach(a => {
+      a.addEventListener('click', e => {
+        const href = a.getAttribute('href');
+        if(href && href.startsWith('#')){
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ── Count-up animation ────────────────────────────────────────────────────
+    function countUp(el, target, duration){
+      let start = 0, step = target / (duration / 16);
+      const timer = setInterval(() => {
+        start = Math.min(start + step, target);
+        el.textContent = Math.floor(start) + (el.dataset.suffix || '');
+        if(start >= target) clearInterval(timer);
+      }, 16);
+    }
+    const countObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          e.target.querySelectorAll('.countUp').forEach(c => {
+            countUp(c, parseInt(c.dataset.target), 1200);
+          });
+          countObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.kvs').forEach(el => countObs.observe(el));
+  </script>
+</body>
+</html>
