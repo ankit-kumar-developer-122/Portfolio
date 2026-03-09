@@ -27,7 +27,7 @@ A modern **developer portfolio website** built with **HTML, CSS, and Vanilla Jav
 
 ## 📸 Portfolio Preview
 
-<img src="./preview.png" width="100%" alt="Portfolio Screenshot"/>
+<img src="./preview.jpeg" width="100%" alt="Portfolio Screenshot"/>
 
 </div>
 
